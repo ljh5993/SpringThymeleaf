@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>URL Maker</title>
+	
+	<link rel="stylesheet" th:href="@{/resources/js/jquery/jquery-ui-1.11.0.custom/jquery-ui.css}" href="../../resources/js/jquery/jquery-ui-1.11.0.custom/jquery-ui.css" />
+	
+	<script type="text/javascript" th:src="@{/resources/js/jquery/jquery-2.1.1.js}" src="../../resources/js/jquery/jquery-2.1.1.js"></script>
+	<script type="text/javascript" th:src="@{resources/js/jquery/jquery-ui-1.11.0.custom/jquery-ui.js}" src="../../resources/js/jquery/jquery-ui-1.11.0.custom/jquery-ui.js"></script>
+</head>
+
+<style>
+.container {
+	width: 1000px;
+}
+
+.url_input_box {
+	width: 100%;
+	height: 30px;
+	border: 3px solid gray;
+	padding: 5px 10px 10px 10px;
+	margin-bottom: 20px;
+}
+
+.url_input_box input {
+	width: 100%;
+	height: 100%;
+	font-size: 15px;
+	border: none;
+}
+
+.url_split_box {
+	width: 100%;
+	height: 100px;
+	border: 3px solid gray;
+	padding: 10px;
+}
+
+ul.url_splits {
+	list-style: none;
+}
+
+.url_piece {
+	width: 50px;
+	height: 20px;
+	background-color: rgb(201, 245, 108);
+	border: 5px solid rgb(201, 245, 108);
+	margin-right: 5px;
+	font-size: 15px;
+}
+
+.url_piece:hover {
+	cursor: pointer;
+}
+
+.url_mergeable {
+	background: url("../../resources/images/plus-icon.png");
+	backgournd-size: 15px 15px;
+}
+
+.url_mergeable:hover {
+	cursor: pointer;
+}
+</style>
+
+
+<body class="container">
+
+	<div class="url_input_box">
+		<input id="url_source" type="text" value=""/>
+	</div>
+	
+	<div class="url_split_box">
+		<span>http://</span>
+		<span class="url_piece">www</span>
+		<span class="url_mergeable">.</span>
+		<span class="url_piece">11st</span>
+		<span class="url_mergeable">.</span>
+		<span class="url_piece">co</span>
+		<span class="url_mergeable">.</span>
+		<span class="url_piece">kr</span>
+		<span>/</span>
+		<span class="url_piece">browsing</span>
+		<span class="url_mergeable">/</span>
+		<span class="url_piece">DisplayCategory.tmall</span>
+		<span>?</span>
+		<span class="url_piece">method=getDisplayCategory</span>&amp;
+		<span class="url_piece">dispCtgrNo=930964</span>
+	</div>
+	
+	<div>
+		<button id="split_btn">SPLIT</button>
+	</div>
+</body>
+
+<script th:inline="javascript">
+
+$(function() {
+/*<![CDATA[*/
+	
+	$("#split_btn").click(splitUrl);
+	
+	function splitUrl() {
+		$.ajax({
+			url : /*@{/splitUrl}*/ "/myapp/splitUrl",
+			method : "post",
+			dataType : "json",
+			data : {
+					url : encodeURIComponent($("#url_source").val())
+			},
+			success : function(data) {
+				alert(data);
+				console.log(data);
+			}
+		});
+	}
+	
+});
+/*]]>*/
+</script>
+
+</html>
+
